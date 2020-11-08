@@ -75,7 +75,7 @@ def reading_time(text):
 # text scraping function
 def get_text(url):
     webpage = urlopen(url)
-    soup = bs(webpage,features='lxml')
+    soup = bs(webpage)
     raw_text = ' '.join(map(lambda p:p.text,soup.find_all('p')))
     webpage_text = re.sub(r"\[\d*\]",'',raw_text)
     return webpage_text
