@@ -4,6 +4,9 @@ from spacy.lang.en.stop_words import STOP_WORDS
 from string import punctuation
 from heapq import nlargest
 
+# regex
+import re
+
 # webscraping
 from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen
@@ -72,7 +75,8 @@ def reading_time(text):
 def get_text(url):
     webpage = urlopen(url)
     soup = bs(webpage)
-    webpage_text = ' '.join(map(lambda p:p.text,soup.find_all('p')))
+    raw_text = ' '.join(map(lambda p:p.text,soup.find_all('p')))
+    webpage_text = re.sub(r"\[\d*\]",'',raw_text)
     return webpage_text
 
 
