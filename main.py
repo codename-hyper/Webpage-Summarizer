@@ -98,6 +98,3 @@ def summary():
         text_summary = summarize(raw_text)
         summary_time = reading_time(text_summary)
         return render_template('summary.html',original_time=original_time,raw_text=raw_text,summary_time=summary_time,text_summary=text_summary)
-
-if __name__ == '__main__':
-    app.run(debug=True)
