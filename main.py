@@ -13,6 +13,7 @@ from urllib.request import urlopen
 
 # API creation
 from flask import Flask, render_template, url_for, request
+from flask_cors import CORS, cross_origin
 
 # NLP model
 nlp = spacy.load('en_core_web_lg')
@@ -74,7 +75,7 @@ def reading_time(text):
 # text scraping function
 def get_text(url):
     webpage = urlopen(url)
-    soup = bs(webpage)
+    soup = bs(webpage,features='lxml')
     raw_text = ' '.join(map(lambda p:p.text,soup.find_all('p')))
     webpage_text = re.sub(r"\[\d*\]",'',raw_text)
     return webpage_text
@@ -83,10 +84,12 @@ def get_text(url):
 app = Flask(__name__)
 
 @app.route('/',methods=['GET','POST'])
+@cross_origin()
 def homepage():
     return render_template('index.html')
 
 @app.route('/summary',methods=['GET','POST'])
+@cross_origin()
 def summary():
     if request.method == 'POST':
         raw_url = request.form['raw_url']
@@ -97,4 +100,4 @@ def summary():
         return render_template('summary.html',original_time=original_time,raw_text=raw_text,summary_time=summary_time,text_summary=text_summary)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)

@@ -3,13 +3,17 @@
 {% block title %}Result{% endblock %}
 
 {% block content %}
-    <div>
-        <h1>Original Text (reading time is {{original_time}} min):</h1>
-        <p>{{raw_text}}</p>
-    </div>
-    <div>
-        <h1>Summary Text (reading time is {{summary_time}} min):</h1>
-        <p>{{text_summary}}</p>
-    </div>
-    
+
+<div>
+    <p class="h1">Summary Text:</p>
+    <p class="font-weight-bold"> (reading time is {{summary_time}} min) </p>
+    <p class="text-left">{{text_summary}}</p>
+</div>
+
+<div>
+    <p class="h1">Original Text:</p>
+    <p class="font-weight-bold"> (reading time is {{original_time}} min) </p>
+    <p class="text-left">{{raw_text}}</p>
+</div>
+
 {% endblock %}
