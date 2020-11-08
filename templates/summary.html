@@ -1,0 +1,15 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Result{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Original Text (reading time is {{original_time}} min):</h1>
+        <p>{{raw_text}}</p>
+    </div>
+    <div>
+        <h1>Summary Text (reading time is {{summary_time}} min):</h1>
+        <p>{{text_summary}}</p>
+    </div>
+    
+{% endblock %}

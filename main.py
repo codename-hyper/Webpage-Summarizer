@@ -11,11 +11,14 @@ from urllib.request import urlopen
 # API creation
 from flask import Flask, render_template, url_for, request
 
+# NLP model
+nlp = spacy.load('en_core_web_lg')
+
 # summarizing function
 def summarize(text):
     # getting stopwords and punctuations to remove from doc
     stopwords = list(STOP_WORDS)
-    punctuation = punctuation + '\n'
+    punctuations = punctuation + '\n'
 
     # tokenization
     doc = nlp(text)
@@ -24,7 +27,7 @@ def summarize(text):
     count_words = {}
     for token in doc:
         if token.text.lower() not in stopwords:
-            if token.text.lower() not in punctuation:
+            if token.text.lower() not in punctuations:
                 if token.text.lower() not in count_words.keys():
                     count_words[token.text.lower()] = 1
                 else:
@@ -77,11 +80,17 @@ app = Flask(__name__)
 
 @app.route('/',methods=['GET','POST'])
 def homepage():
-    pass
+    return render_template('index.html')
 
 @app.route('/summary',methods=['GET','POST'])
 def summary():
-    pass
+    if request.method == 'POST':
+        raw_url = request.form['raw_url']
+        raw_text = get_text(raw_url)
+        original_time = reading_time(raw_text)
+        text_summary = summarize(raw_text)
+        summary_time = reading_time(text_summary)
+        return render_template('summary.html',original_time=original_time,raw_text=raw_text,summary_time=summary_time,text_summary=text_summary)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
