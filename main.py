@@ -16,7 +16,7 @@ from flask import Flask, render_template, url_for, request
 from flask_cors import CORS, cross_origin
 
 # NLP model
-nlp = spacy.load('en_core_web_lg')
+nlp = spacy.load('en_core_web_sm')
 
 # summarizing function
 def summarize(text):
